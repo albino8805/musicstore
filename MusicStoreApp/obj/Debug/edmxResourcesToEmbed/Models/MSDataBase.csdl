@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MusicStoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="Created" Type="DateTime" Precision="3" />
+    <Property Name="Updated" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Album" Relationship="MusicStoreModel.FK__Album__CategoryF__145C0A3F" FromRole="Category" ToRole="Album" />
+  </EntityType>
+  <EntityType Name="Singer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="Created" Type="DateTime" Precision="3" />
+    <Property Name="Updated" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Album" Relationship="MusicStoreModel.FK__Album__SingerFK__15502E78" FromRole="Singer" ToRole="Album" />
+  </EntityType>
+  <EntityContainer Name="MusicStoreEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Category" EntityType="Self.Category" />
+    <EntitySet Name="Singer" EntityType="Self.Singer" />
+    <EntitySet Name="Album" EntityType="MusicStoreModel.Album" />
+    <AssociationSet Name="FK__Album__CategoryF__145C0A3F" Association="MusicStoreModel.FK__Album__CategoryF__145C0A3F">
+      <End Role="Category" EntitySet="Category" />
+      <End Role="Album" EntitySet="Album" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Album__SingerFK__15502E78" Association="MusicStoreModel.FK__Album__SingerFK__15502E78">
+      <End Role="Singer" EntitySet="Singer" />
+      <End Role="Album" EntitySet="Album" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Album">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Year" Type="Int32" />
+    <Property Name="PriceSale" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="SingerFK" Type="Int32" Nullable="false" />
+    <Property Name="CategoryFK" Type="Int32" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="Created" Type="DateTime" Precision="3" />
+    <Property Name="Updated" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Category" Relationship="MusicStoreModel.FK__Album__CategoryF__145C0A3F" FromRole="Album" ToRole="Category" />
+    <NavigationProperty Name="Singer" Relationship="MusicStoreModel.FK__Album__SingerFK__15502E78" FromRole="Album" ToRole="Singer" />
+  </EntityType>
+  <Association Name="FK__Album__CategoryF__145C0A3F">
+    <End Type="MusicStoreModel.Category" Role="Category" Multiplicity="1" />
+    <End Type="MusicStoreModel.Album" Role="Album" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Album">
+        <PropertyRef Name="CategoryFK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Album__SingerFK__15502E78">
+    <End Type="MusicStoreModel.Singer" Role="Singer" Multiplicity="1" />
+    <End Type="MusicStoreModel.Album" Role="Album" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Singer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Album">
+        <PropertyRef Name="SingerFK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
