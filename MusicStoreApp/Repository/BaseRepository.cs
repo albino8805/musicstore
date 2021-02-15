@@ -16,8 +16,6 @@ namespace MusicStoreApp.Repository
     public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
         private readonly MusicStoreEntities _context;
-        private const bool FalseValue = false;
-        private const bool TrueValue = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseRepository{TEntity}"/> class.
